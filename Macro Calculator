@@ -1,0 +1,144 @@
+import streamlit as st
+
+# --- PAGE CONFIGURATION ---
+st.set_page_config(page_title="NASM Macro Calculator", page_icon="🥗", layout="centered")
+
+# --- CUSTOM STYLING ---
+st.markdown("""
+    <style>
+    .stButton>button {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        padding: 10px;
+    }
+    .big-font { font-size: 20px !important; font-weight: bold; }
+    .result-box {
+        background-color: #f0f2f6;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid #4CAF50;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# --- HEADER ---
+st.title("🥗 NASM Macro Calculator")
+st.write("Enter your details below to get your personalized nutrition plan.")
+st.markdown("---")
+
+# --- INPUT SECTION ---
+col1, col2 = st.columns(2)
+
+with col1:
+    weight_lbs = st.number_input("Weight (lbs)", min_value=50.0, max_value=500.0, value=150.0)
+    height_inches = st.number_input("Height (inches)", min_value=40.0, max_value=90.0, value=65.0)
+    age = st.number_input("Age (years)", min_value=10, max_value=100, value=30)
+
+with col2:
+    sex = st.selectbox("Biological Sex", options=["Male", "Female"])
+    activity_level = st.selectbox(
+        "Activity Level",
+        options=[
+            "Sedentary (Desk job, no exercise)",
+            "Lightly Active (1-3 days/week)",
+            "Moderately Active (3-5 days/week)",
+            "Very Active (6-7 days/week)",
+            "Extremely Active (Physical job + training)"
+        ]
+    )
+
+# Map activity text to number
+act_map = {
+    "Sedentary (Desk job, no exercise)": 1.2,
+    "Lightly Active (1-3 days/week)": 1.375,
+    "Moderately Active (3-5 days/week)": 1.55,
+    "Very Active (6-7 days/week)": 1.725,
+    "Extremely Active (Physical job + training)": 1.9
+}
+activity_factor = act_map[activity_level]
+
+st.markdown("### 🎯 Select Your Goal")
+goal_option = st.radio(
+    "What are you trying to achieve?",
+    options=[
+        "Fat Loss (Standard -500 kcal)",
+        "Aggressive Fat Loss (-1000 kcal)",
+        "Maintenance (Keep current weight)",
+        "Muscle Gain (Surplus +500 kcal)"
+    ]
+)
+
+# Map goal to calorie adjustment
+goal_map = {
+    "Fat Loss (Standard -500 kcal)": -500,
+    "Aggressive Fat Loss (-1000 kcal)": -1000,
+    "Maintenance (Keep current weight)": 0,
+    "Muscle Gain (Surplus +500 kcal)": 500
+}
+goal_adj = goal_map[goal_option]
+
+# --- CALCULATION BUTTON ---
+if st.button("Calculate Macros"):
+    
+    # 1. Conversions
+    weight_kg = weight_lbs / 2.20462
+    height_cm = height_inches * 2.54
+
+    # 2. BMR Calculation (Mifflin-St Jeor)
+    if sex == "Male":
+        bmr = (9.99 * weight_kg) + (6.25 * height_cm) - (4.92 * age) + 5
+        safety_limit = 1500
+    else:
+        bmr = (9.99 * weight_kg) + (6.25 * height_cm) - (4.92 * age) - 161
+        safety_limit = 1200
+
+    # 3. TDEE & Target
+    tdee = bmr * activity_factor
+    target_cals = tdee + goal_adj
+
+    # Safety Check
+    warning_msg = ""
+    if target_cals < safety_limit:
+        target_cals = safety_limit
+        warning_msg = f"⚠️ Calories adjusted to {safety_limit} (Safety Floor)"
+
+    # 4. Macros
+    # Protein: 2.0g/kg (NASM range 1.6-2.2)
+    protein_g = int(weight_kg * 2.0)
+    protein_cals = protein_g * 4
+
+    # Fat: 30% of total calories
+    fat_cals = target_cals * 0.30
+    fat_g = int(fat_cals / 9)
+
+    # Carbs: Remainder
+    carb_cals = target_cals - (protein_cals + fat_cals)
+    carb_g = int(carb_cals / 4)
+    if carb_g < 0: carb_g = 0
+
+    # --- DISPLAY RESULTS ---
+    st.markdown("---")
+    st.success("✅ Calculations Complete!")
+    
+    # Summary Metrics
+    col_a, col_b, col_c = st.columns(3)
+    col_a.metric("Target Calories", f"{int(target_cals)}")
+    col_b.metric("Maintenance", f"{int(tdee)}")
+    col_c.metric("BMR", f"{int(bmr)}")
+
+    if warning_msg:
+        st.warning(warning_msg)
+
+    # Detailed Macros
+    st.markdown(f"""
+    <div class="result-box">
+        <h3>🍽️ Your Daily Macro Split</h3>
+        <ul>
+            <li><b>Protein:</b> {protein_g}g <span style='color:grey'>(Build Muscle)</span></li>
+            <li><b>Fats:</b> {fat_g}g <span style='color:grey'>(Hormone Health)</span></li>
+            <li><b>Carbs:</b> {carb_g}g <span style='color:grey'>(Energy)</span></li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
