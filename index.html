@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fit Coach Karl – The Science of Training, Simplified</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap (compiled from SCSS) -->
+  <link rel="stylesheet" href="static/custom.css">
+
+  <style>
+    /* ── Brand tokens ── */
+    :root {
+      --c-black:    #111111;
+      --c-blue:     #1C5FA8;
+      --c-gray-d:   #374151;
+      --c-gray-m:   #64748B;
+      --c-gray-l:   #E5EAF0;
+      --c-white:    #FFFFFF;
+      --c-offwhite: #F5F7FA;
+    }
+
+    /* ── Base ── */
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--c-gray-d);
+      background: var(--c-white);
+    }
+    h1, h2, h3, h4, h5, h6, .font-brand {
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      color: var(--c-black);
+    }
+
+    /* ── Utilities ── */
+    .text-blue  { color: var(--c-blue); }
+    .text-mid   { color: var(--c-gray-m); }
+    .bg-offwhite{ background: var(--c-offwhite); }
+    .bg-black   { background: var(--c-black); }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--c-blue);
+    }
+    .section-heading {
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.12;
+    }
+    .section-pad { padding: 88px 0; }
+
+    /* ── Nav ── */
+    .navbar { border-bottom: 1px solid var(--c-gray-l); }
+    .navbar-brand {
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: .06em;
+      color: var(--c-black) !important;
+    }
+    .nav-link {
+      color: var(--c-gray-d) !important;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-link:hover { color: var(--c-black) !important; }
+
+    /* ── Buttons ── */
+    .btn-brand {
+      background: var(--c-blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background .15s;
+    }
+    .btn-brand:hover { background: #164d87; color: #fff; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--c-black);
+      border: 1.5px solid var(--c-black);
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background .15s, color .15s;
+    }
+    .btn-ghost:hover { background: var(--c-black); color: #fff; }
+
+    .btn-ghost-light {
+      background: transparent;
+      color: #9CA3AF;
+      border: 1.5px solid #374151;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-ghost-light:hover { border-color: #6B7280; color: #d1d5db; }
+
+    /* ── Hero ── */
+    .hero { padding: 96px 0 80px; }
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.06;
+      letter-spacing: -.02em;
+    }
+    .hero-lead {
+      font-size: 17px;
+      color: var(--c-gray-m);
+      max-width: 500px;
+      line-height: 1.65;
+    }
+    .hero-stat-num {
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 38px;
+      color: var(--c-black);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--c-gray-m);
+      margin-top: 4px;
+    }
+    .hero-img-placeholder {
+      height: 400px;
+      background: var(--c-gray-l);
+      border-radius: 10px;
+    }
+
+    /* ── Program cards ── */
+    .program-card {
+      border: 1px solid var(--c-gray-l);
+      border-radius: 10px;
+      padding: 32px 28px;
+      background: var(--c-white);
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .program-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,.09);
+    }
+    .program-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    /* ── About ── */
+    .about-img-placeholder {
+      height: 460px;
+      background: var(--c-gray-l);
+      border-radius: 10px;
+    }
+    .stat-block .num {
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      color: var(--c-black);
+      line-height: 1;
+    }
+    .stat-block .lbl {
+      font-size: 13px;
+      color: var(--c-gray-m);
+      margin-top: 4px;
+    }
+
+    /* ── How it works ── */
+    .step-num {
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 52px;
+      color: var(--c-gray-l);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    /* ── Testimonials ── */
+    .testimonial-card {
+      border: 1px solid var(--c-gray-l);
+      border-radius: 10px;
+      padding: 28px;
+      background: var(--c-white);
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      display: flex;
+      flex-direction: column;
+    }
+    .testimonial-stars { color: var(--c-blue); font-size: 16px; letter-spacing: 2px; }
+    .testimonial-quote { color: var(--c-gray-d); font-size: 15px; line-height: 1.65; }
+    .avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--c-gray-l);
+      flex-shrink: 0;
+    }
+
+    /* ── CTA ── */
+    .cta-section { padding: 100px 0; }
+    .cta-section h2 {
+      color: #fff;
+      font-size: clamp(28px, 4vw, 44px);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid #1f1f1f;
+      padding: 56px 0 32px;
+    }
+    .footer-logo {
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: .06em;
+      color: #fff;
+    }
+    .footer-link {
+      color: #6B7280;
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 10px;
+      transition: color .15s;
+    }
+    .footer-link:hover { color: #fff; }
+    .footer-col-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-rule {
+      border-color: #1f1f1f;
+      opacity: 1;
+      margin: 40px 0 24px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAV
+════════════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg bg-white sticky-top py-3">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      FIT COACH <span class="text-blue">KARL</span>
+    </a>
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4 me-4 mt-3 mt-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#results">Results</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn-brand mt-3 mt-lg-0">Start Today</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <!-- Copy -->
+      <div class="col-lg-6">
+        <p class="eyebrow mb-3">Personal Training &amp; Nutrition</p>
+        <h1 class="mb-4">Train Smarter.<br>Get Results.</h1>
+        <p class="hero-lead mb-5">
+          The science of training, simplified. Evidence-based coaching
+          tailored to your body, your goals, and your life.
+        </p>
+        <div class="d-flex flex-wrap gap-3 mb-5">
+          <a href="#contact" class="btn-brand">Start Your Journey</a>
+          <a href="#programs" class="btn-ghost">View Programs</a>
+        </div>
+
+        <!-- Social proof strip -->
+        <div class="d-flex flex-wrap gap-5 pt-4"
+             style="border-top: 1px solid var(--c-gray-l);">
+          <div>
+            <div class="hero-stat-num">200+</div>
+            <div class="hero-stat-label">Clients Coached</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">92%</div>
+            <div class="hero-stat-label">Goal Achievement Rate</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">8+</div>
+            <div class="hero-stat-label">Years Experience</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="col-lg-6 d-none d-lg-flex justify-content-end">
+        <div style="width:100%;max-width:460px;">
+          <div class="hero-img-placeholder"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     PROGRAMS
+════════════════════════════════════════ -->
+<section id="programs" class="section-pad bg-offwhite">
+  <div class="container">
+
+    <div class="row mb-5">
+      <div class="col-lg-5">
+        <p class="eyebrow mb-2">Programs</p>
+        <h2 class="section-heading mb-3">Choose Your Path</h2>
+        <p class="text-mid">
+          Every program is built on evidence-based principles,
+          personalised to your starting point and target goal.
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="program-card h-100">
+          <div class="program-icon" style="background:var(--c-blue);"></div>
+          <h3 class="h5 mb-2">1-on-1 Coaching</h3>
+          <p class="text-mid mb-4" style="flex:1;">
+            Weekly check-ins, fully custom training and nutrition plans,
+            and direct access to Karl for accountability and support.
+          </p>
+          <a href="#contact" class="btn-brand align-self-start">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="program-card h-100">
+          <div class="program-icon" style="background:var(--c-gray-l);"></div>
+          <h3 class="h5 mb-2">Online Training</h3>
+          <p class="text-mid mb-4" style="flex:1;">
+            Structured 12-week programs you can do anywhere.
+            Science-backed periodisation, video demos, and progress tracking.
+          </p>
+          <a href="#contact" class="btn-brand align-self-start">Get Started</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="program-card h-100">
+          <div class="program-icon" style="background:var(--c-gray-l);"></div>
+          <h3 class="h5 mb-2">Nutrition Coaching</h3>
+          <p class="text-mid mb-4" style="flex:1;">
+            Macro targets, meal strategies, and sustainable habits —
+            without cutting out the foods you love.
+          </p>
+          <a href="#contact" class="btn-brand align-self-start">Learn More</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about" class="section-pad">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-5">
+        <div class="about-img-placeholder"></div>
+      </div>
+
+      <div class="col-lg-6 offset-lg-1">
+        <p class="eyebrow mb-2">About Karl</p>
+        <h2 class="section-heading mb-4">Science-Backed.<br>Results-Driven.</h2>
+        <p class="text-mid mb-3">
+          Karl is a NASM-certified personal trainer with over 8 years
+          of experience helping clients build strength, lose fat, and
+          perform at their best.
+        </p>
+        <p class="text-mid mb-5">
+          No fads. No guesswork. Just structured, evidence-based
+          programming that fits your lifestyle and delivers measurable results.
+        </p>
+
+        <div class="row g-4">
+          <div class="col-6">
+            <div class="stat-block">
+              <div class="num">NASM</div>
+              <div class="lbl">Certified Trainer</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-block">
+              <div class="num">8+</div>
+              <div class="lbl">Years Experience</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-block">
+              <div class="num">200+</div>
+              <div class="lbl">Clients Transformed</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-block">
+              <div class="num">92%</div>
+              <div class="lbl">Hit Their Goal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════ -->
+<section class="section-pad bg-offwhite">
+  <div class="container">
+
+    <div class="row mb-5">
+      <div class="col-lg-5">
+        <p class="eyebrow mb-2">Process</p>
+        <h2 class="section-heading">How It Works</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="step-num">01</div>
+        <h3 class="h5 mb-2">Apply Online</h3>
+        <p class="text-mid">
+          Fill out a short application so Karl understands your goals,
+          schedule, and training history.
+        </p>
+      </div>
+      <div class="col-md-4">
+        <div class="step-num">02</div>
+        <h3 class="h5 mb-2">Get Your Plan</h3>
+        <p class="text-mid">
+          Receive a fully personalised training and nutrition plan
+          built around your lifestyle and objectives.
+        </p>
+      </div>
+      <div class="col-md-4">
+        <div class="step-num">03</div>
+        <h3 class="h5 mb-2">Execute &amp; Progress</h3>
+        <p class="text-mid">
+          Train with purpose, track your progress, and refine your
+          approach with Karl's ongoing support.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════ -->
+<section id="results" class="section-pad">
+  <div class="container">
+
+    <div class="row mb-5">
+      <div class="col-lg-5">
+        <p class="eyebrow mb-2">Results</p>
+        <h2 class="section-heading">What Clients Say</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="testimonial-card h-100">
+          <div class="testimonial-stars mb-3">★★★★★</div>
+          <p class="testimonial-quote mb-4" style="flex:1;">
+            "Karl's programming is unlike anything I've tried. Within
+            12 weeks I dropped 18 lbs and hit a deadlift PR. The
+            science-backed approach actually works."
+          </p>
+          <div class="d-flex align-items-center gap-3 mt-auto">
+            <div class="avatar"></div>
+            <div>
+              <div style="font-weight:600;font-size:14px;color:var(--c-black);">Marcus T.</div>
+              <div style="font-size:13px;color:var(--c-gray-m);">Fat Loss Program</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="testimonial-card h-100">
+          <div class="testimonial-stars mb-3">★★★★★</div>
+          <p class="testimonial-quote mb-4" style="flex:1;">
+            "I've worked with three trainers before Karl. The difference
+            is he explains the why behind everything. I finally
+            understand how to eat for my goals."
+          </p>
+          <div class="d-flex align-items-center gap-3 mt-auto">
+            <div class="avatar"></div>
+            <div>
+              <div style="font-weight:600;font-size:14px;color:var(--c-black);">Sarah L.</div>
+              <div style="font-size:13px;color:var(--c-gray-m);">Nutrition + Training</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="testimonial-card h-100">
+          <div class="testimonial-stars mb-3">★★★★★</div>
+          <p class="testimonial-quote mb-4" style="flex:1;">
+            "As a busy professional I needed a plan that fit my schedule.
+            Karl built something flexible and effective. Down 25 lbs and
+            stronger than ever."
+          </p>
+          <div class="d-flex align-items-center gap-3 mt-auto">
+            <div class="avatar"></div>
+            <div>
+              <div style="font-weight:600;font-size:14px;color:var(--c-black);">James R.</div>
+              <div style="font-size:13px;color:var(--c-gray-m);">1-on-1 Coaching</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     CTA
+════════════════════════════════════════ -->
+<section id="contact" class="cta-section bg-black">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <p class="eyebrow mb-3">Ready to Start?</p>
+        <h2 class="mb-4">
+          Everything you create<br>must follow this system.
+        </h2>
+        <p style="color:#9CA3AF;font-size:16px;max-width:480px;line-height:1.65;"
+           class="mb-5">
+          Consistent. Professional. Impactful. Apply today and receive
+          your personalised plan within 48 hours.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="mailto:hello@fitcoachkarl.com" class="btn-brand">Apply Now</a>
+          <a href="mailto:hello@fitcoachkarl.com" class="btn-ghost-light">Book a Free Call</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="bg-black">
+  <div class="container">
+    <div class="row g-4">
+
+      <div class="col-lg-4">
+        <div class="footer-logo mb-2">
+          FIT COACH <span class="text-blue">KARL</span>
+        </div>
+        <p style="color:#6B7280;font-size:14px;max-width:260px;">
+          The science of training, simplified.
+        </p>
+      </div>
+
+      <div class="col-6 col-md-3 col-lg-2 offset-lg-2">
+        <div class="footer-col-label">Programs</div>
+        <a href="#programs" class="footer-link">1-on-1 Coaching</a>
+        <a href="#programs" class="footer-link">Online Training</a>
+        <a href="#programs" class="footer-link">Nutrition</a>
+      </div>
+
+      <div class="col-6 col-md-3 col-lg-2">
+        <div class="footer-col-label">Company</div>
+        <a href="#about" class="footer-link">About</a>
+        <a href="#results" class="footer-link">Results</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </div>
+
+    </div>
+
+    <hr class="footer-rule">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <p style="color:#6B7280;font-size:13px;margin:0;">
+        © 2025 Fit Coach Karl. All rights reserved.
+      </p>
+      <p style="color:#6B7280;font-size:13px;margin:0;">
+        NASM Certified Personal Trainer
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- Bootstrap JS (for mobile nav) -->
+<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,7 +1,30 @@
-// Variable overrides first
-$primary: #900;
-$enable-shadows: true;
-$prefix: "mo-";
+// Fit Coach Karl – Brand Variables
+$primary:           #1C5FA8;   // Electric Blue
+$secondary:         #374151;   // Dark Gray
+$dark:              #111111;   // Core Black
+$light:             #F5F7FA;   // Off-White
+$body-color:        #374151;
+$body-bg:           #FFFFFF;
+$border-color:      #E5EAF0;
+$border-radius:     0.5rem;    // 8px
+$border-radius-lg:  0.625rem;  // 10px
+
+$enable-shadows:    true;
+$prefix:            "mo-";
+
+// Typography
+$font-family-sans-serif: 'Inter', system-ui, -apple-system, sans-serif;
+$headings-font-weight:   700;
+
+// Buttons
+$btn-padding-x:     1.25rem;
+$btn-padding-y:     0.75rem;
+$btn-border-radius: 0.5rem;
+$btn-font-weight:   700;
+
+// Cards
+$card-border-color:  #E5EAF0;
+$card-border-radius: 0.625rem;
 
 // Then import Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
