@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "http-server . -p 3000 -o",
     "build:css": "sass scss/custom.scss static/custom.css --style=compressed",
     "watch:css": "sass scss/custom.scss static/custom.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +20,7 @@
     "bootstrap": "^5.3.8"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "sass": "^1.99.0"
   }
 }
