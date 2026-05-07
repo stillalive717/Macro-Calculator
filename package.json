@@ -1,0 +1,15 @@
+{
+  "name": "market-researcher",
+  "version": "0.1.0",
+  "description": "Sector or theme to industry overview, competitive landscape, peer comps, and ideas shortlist",
+  "author": {
+    "name": "Anthropic FSI"
+  },
+  "scripts": {
+    "start": "streamlit run app.py",
+    "dev": "streamlit run app.py --server.runOnSave true"
+  },
+  "dependencies": {
+    "python": ">=3.11"
+  }
+}
