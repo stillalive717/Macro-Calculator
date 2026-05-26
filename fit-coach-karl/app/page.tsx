@@ -7,20 +7,20 @@ const features = [
     body: "Calculated from your TDEE, goal, and body composition. Not generic. Yours.",
   },
   {
-    icon: "🤖",
-    title: "AI Coach",
-    body: "Ask anything. Form checks, meal advice, motivation. Available 24/7.",
-  },
-  {
     icon: "📈",
     title: "Smart Workouts",
     body: "Four programs. Progressive overload built in. Track every session.",
+  },
+  {
+    icon: "🎯",
+    title: "Built around you",
+    body: "Your stats, your goal, your targets. Recalculates as your body changes.",
   },
 ];
 
 const stats = [
   { value: "4", label: "Programs" },
-  { value: "AI", label: "Powered Coach" },
+  { value: "TDEE", label: "Calculated" },
   { value: "100%", label: "Personalized" },
   { value: "0", label: "Wasted Reps" },
 ];

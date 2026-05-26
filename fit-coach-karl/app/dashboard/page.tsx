@@ -311,10 +311,9 @@ export default function Dashboard() {
 
             <div className="sm:col-span-2 bg-card border border-border rounded-2xl p-8">
               <h2 className="text-lg font-bold mb-4">Next steps</h2>
-              <div className="grid sm:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 {[
                   { href: "/workouts", icon: "💪", title: "Start your program", body: "Choose from 4 expert-programmed workout plans." },
-                  { href: "/coach", icon: "🤖", title: "Ask your AI coach", body: "Get answers on training, nutrition, or recovery." },
                   { href: "/onboarding", icon: "🔄", title: "Update your stats", body: "Rerun the calculator as your body changes." },
                 ].map((item) => (
                   <Link
