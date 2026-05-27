@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coach Karl — Instagram Carousel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --surface: #111111;
+      --accent: #D6FF47;
+      --accent2: #FF4747;
+      --white: #FFFFFF;
+      --muted: #555555;
+      --border: #1E1E1E;
+      --slide-size: 500px;
+    }
+
+    body {
+      background: #050505;
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+      gap: 0;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .page-header .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--white);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .page-header h1 span { color: var(--accent); }
+
+    /* ── Carousel track ── */
+    .carousel-wrapper {
+      position: relative;
+      width: min(var(--slide-size), 92vw);
+    }
+
+    .carousel-track {
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .slide {
+      min-width: var(--slide-size);
+      width: var(--slide-size);
+      max-width: 92vw;
+      height: var(--slide-size);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* ── Grain overlay ── */
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: 0.35;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: 10;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--white);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      font-size: 18px;
+    }
+    .btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+    .btn:disabled { opacity: 0.25; cursor: default; }
+    .btn:disabled:hover { background: var(--surface); color: var(--white); border-color: var(--border); }
+
+    .dots { display: flex; gap: 6px; }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot.active { background: var(--accent); width: 20px; border-radius: 3px; }
+
+    /* ────────────────────────────────────────────
+       SLIDE 1 — COVER
+    ──────────────────────────────────────────── */
+    .slide-1 {
+      background: var(--bg);
+    }
+    .slide-1 .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.4;
+    }
+    .slide-1 .slash {
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 320px; height: 320px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.07;
+    }
+    .slide-1 .slash2 {
+      position: absolute;
+      top: -30px; left: -30px;
+      width: 160px; height: 160px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.05;
+    }
+    .slide-1 .badge {
+      position: absolute;
+      top: 28px; left: 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .slide-1 .slide-num {
+      position: absolute;
+      top: 28px; right: 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+    .slide-1 .content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 36px 32px 40px;
+    }
+    .slide-1 .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .slide-1 .headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 90px;
+      line-height: 0.9;
+      color: var(--white);
+      letter-spacing: 0.01em;
+    }
+    .slide-1 .headline .accent { color: var(--accent); display: block; }
+    .slide-1 .sub {
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 280px;
+    }
+    .slide-1 .swipe {
+      position: absolute;
+      bottom: 40px; right: 32px;
+      display: flex; align-items: center; gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .slide-1 .swipe-arrow {
+      width: 28px; height: 1px;
+      background: var(--accent);
+      position: relative;
+    }
+    .slide-1 .swipe-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 6px; height: 6px;
+      border-top: 1px solid var(--accent);
+      border-right: 1px solid var(--accent);
+      transform: rotate(45deg);
+    }
+
+    /* ────────────────────────────────────────────
+       SLIDE 2 — PROTEIN
+    ──────────────────────────────────────────── */
+    .slide-2 {
+      background: var(--accent);
+    }
+    .slide-2 .big-bg {
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 220px;
+      line-height: 1;
+      color: rgba(0,0,0,0.06);
+      letter-spacing: -0.04em;
+      top: -20px; left: -10px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .slide-2 .slide-num {
+      position: absolute;
+      top: 28px; right: 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: rgba(0,0,0,0.4);
+    }
+    .slide-2 .macro-icon {
+      position: absolute;
+      top: 28px; left: 28px;
+      width: 40px; height: 40px;
+      background: #000;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .slide-2 .content {
+      position: absolute;
+      bottom: 40px; left: 32px; right: 32px;
+    }
+    .slide-2 .label-top {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: rgba(0,0,0,0.5);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .slide-2 .macro-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 96px;
+      line-height: 0.88;
+      color: #000;
+      letter-spacing: 0.01em;
+    }
+    .slide-2 .divider {
+      width: 40px; height: 2px;
+      background: rgba(0,0,0,0.3);
+      margin: 16px 0;
+    }
+    .slide-2 .body-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(0,0,0,0.7);
+      line-height: 1.55;
+      max-width: 300px;
+    }
+    .slide-2 .stat-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .slide-2 .stat .value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      color: #000;
+      line-height: 1;
+    }
+    .slide-2 .stat .key {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: rgba(0,0,0,0.5);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ────────────────────────────────────────────
+       SLIDE 3 — CARBS
+    ──────────────────────────────────────────── */
+    .slide-3 {
+      background: #0D0D0D;
+    }
+    .slide-3 .diagonal {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #141414 50%, #0A0A0A 50%);
+    }
+    .slide-3 .accent-bar {
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent);
+    }
+    .slide-3 .big-num {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 260px;
+      line-height: 1;
+      color: rgba(255,255,255,0.025);
+      letter-spacing: -0.04em;
+    }
+    .slide-3 .slide-num {
+      position: absolute;
+      top: 28px; right: 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+    .slide-3 .content {
+      position: absolute;
+      inset: 0;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .slide-3 .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .slide-3 .tag::before {
+      content: '';
+      width: 16px; height: 1px;
+      background: var(--accent);
+    }
+    .slide-3 .headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 88px;
+      line-height: 0.88;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      margin-bottom: 20px;
+    }
+    .slide-3 .headline .not-enemy {
+      color: var(--accent);
+    }
+    .slide-3 .myth-box {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      border-radius: 2px;
+    }
+    .slide-3 .myth-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--accent2);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .slide-3 .myth-text {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      text-decoration: line-through;
+    }
+    .slide-3 .truth-text {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.5;
+    }
+
+    /* ────────────────────────────────────────────
+       SLIDE 4 — FATS
+    ──────────────────────────────────────────── */
+    .slide-4 {
+      background: #0A0A0A;
+    }
+    .slide-4 .bg-circle-1 {
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(214,255,71,0.08) 0%, transparent 70%);
+    }
+    .slide-4 .bg-circle-2 {
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,71,71,0.05) 0%, transparent 70%);
+    }
+    .slide-4 .slide-num {
+      position: absolute;
+      top: 28px; right: 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+    .slide-4 .header {
+      position: absolute;
+      top: 28px; left: 32px;
+    }
+    .slide-4 .header .macro-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 5px 8px;
+      background: rgba(214,255,71,0.08);
+      border: 1px solid rgba(214,255,71,0.15);
+      border-radius: 20px;
+    }
+    .slide-4 .header .dot-icon {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .slide-4 .header .pill-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .slide-4 .center-content {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 100%;
+      padding: 0 40px;
+    }
+    .slide-4 .percent {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 120px;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .slide-4 .percent sub {
+      font-size: 36px;
+      vertical-align: baseline;
+    }
+    .slide-4 .percent-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: -8px;
+    }
+    .slide-4 .fat-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 64px;
+      line-height: 0.92;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      margin-top: 12px;
+    }
+    .slide-4 .fat-sub {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+      margin-top: 14px;
+      max-width: 260px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .slide-4 .bottom-tags {
+      position: absolute;
+      bottom: 36px;
+      left: 32px; right: 32px;
+      display: flex;
+      gap: 8px;
+    }
+    .slide-4 .tag-pill {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+
+    /* ────────────────────────────────────────────
+       SLIDE 5 — MACRO SPLIT
+    ──────────────────────────────────────────── */
+    .slide-5 {
+      background: #0A0A0A;
+    }
+    .slide-5 .top-stripe {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+    }
+    .slide-5 .slide-num {
+      position: absolute;
+      top: 28px; right: 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+    .slide-5 .content {
+      position: absolute;
+      inset: 0;
+      padding: 36px 32px 36px;
+      display: flex;
+      flex-direction: column;
+    }
+    .slide-5 .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .slide-5 .title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 60px;
+      line-height: 0.9;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      margin-bottom: 24px;
+    }
+    .slide-5 .macro-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .slide-5 .macro-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .slide-5 .macro-row .row-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      width: 82px;
+      flex-shrink: 0;
+    }
+    .slide-5 .bar-track {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .slide-5 .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0s;
+    }
+    .slide-5 .bar-fill.protein { background: var(--accent); width: 65%; }
+    .slide-5 .bar-fill.carbs   { background: #47B4FF; width: 45%; }
+    .slide-5 .bar-fill.fats    { background: var(--accent2); width: 30%; }
+    .slide-5 .row-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .slide-5 .row-desc {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      margin-top: 2px;
+      padding-left: 96px;
+    }
+    .slide-5 .footnote {
+      margin-top: 20px;
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+      line-height: 1.5;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .slide-5 .footnote span {
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ────────────────────────────────────────────
+       SLIDE 6 — CTA
+    ──────────────────────────────────────────── */
+    .slide-6 {
+      background: var(--accent);
+    }
+    .slide-6 .bg-geo {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 30px,
+          rgba(0,0,0,0.025) 30px,
+          rgba(0,0,0,0.025) 31px
+        );
+    }
+    .slide-6 .bg-circle {
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.06);
+    }
+    .slide-6 .slide-num {
+      position: absolute;
+      top: 28px; right: 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: rgba(0,0,0,0.35);
+    }
+    .slide-6 .content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 36px;
+    }
+    .slide-6 .coach-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: rgba(0,0,0,0.45);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .slide-6 .cta-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 80px;
+      line-height: 0.88;
+      color: #000;
+      letter-spacing: 0.01em;
+      margin-bottom: 20px;
+    }
+    .slide-6 .cta-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(0,0,0,0.6);
+      line-height: 1.55;
+      max-width: 280px;
+      margin-bottom: 28px;
+    }
+    .slide-6 .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #000;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 2px;
+    }
+    .slide-6 .cta-btn .arrow {
+      width: 16px; height: 1px;
+      background: var(--accent);
+      position: relative;
+    }
+    .slide-6 .cta-btn .arrow::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 6px; height: 6px;
+      border-top: 1px solid var(--accent);
+      border-right: 1px solid var(--accent);
+      transform: rotate(45deg);
+    }
+    .slide-6 .handle {
+      position: absolute;
+      bottom: 32px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: rgba(0,0,0,0.4);
+    }
+
+    /* ── Slide counter label ── */
+    .slide-counter {
+      text-align: center;
+      margin-top: 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── Export hint ── */
+    .export-hint {
+      margin-top: 40px;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: #2a2a2a;
+      text-transform: uppercase;
+    }
+    .export-hint a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="label">Instagram Carousel</div>
+    <h1>Coach <span>Karl</span></h1>
+  </div>
+
+  <div class="carousel-wrapper">
+    <div class="carousel-track">
+      <div class="slides" id="slides">
+
+        <!-- SLIDE 1 — COVER -->
+        <div class="slide slide-1">
+          <div class="bg-grid"></div>
+          <div class="slash"></div>
+          <div class="slash2"></div>
+          <div class="badge">Nutrition Series</div>
+          <div class="slide-num">01 / 06</div>
+          <div class="content">
+            <div class="eyebrow">Master Your Macros</div>
+            <div class="headline">
+              FUEL
+              <span class="accent">THE</span>
+              MACHINE
+            </div>
+            <div class="sub">
+              Everything you need to know about macronutrients — protein, carbs & fats — to hit your goals.
+            </div>
+          </div>
+          <div class="swipe">
+            <span>Swipe</span>
+            <div class="swipe-arrow"></div>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 — PROTEIN -->
+        <div class="slide slide-2">
+          <div class="big-bg">PRO</div>
+          <div class="slide-num">02 / 06</div>
+          <div class="macro-icon">💪</div>
+          <div class="content">
+            <div class="label-top">Macro 01</div>
+            <div class="macro-name">PROTEIN</div>
+            <div class="divider"></div>
+            <div class="body-text">
+              The building block of muscle. Protein repairs micro-tears from training and keeps you satiated longer than any other macro.
+            </div>
+            <div class="stat-row">
+              <div class="stat">
+                <div class="value">2.0g</div>
+                <div class="key">per kg bodyweight</div>
+              </div>
+              <div class="stat">
+                <div class="value">4</div>
+                <div class="key">cal per gram</div>
+              </div>
+              <div class="stat">
+                <div class="value">~30%</div>
+                <div class="key">of total calories</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 3 — CARBS -->
+        <div class="slide slide-3">
+          <div class="diagonal"></div>
+          <div class="accent-bar"></div>
+          <div class="big-num">C</div>
+          <div class="slide-num">03 / 06</div>
+          <div class="content">
+            <div class="tag">Macro 02</div>
+            <div class="headline">
+              CARBS<br>
+              <span class="not-enemy">≠ ENEMY</span>
+            </div>
+            <div class="myth-box">
+              <div class="myth-label">The Myth</div>
+              <div class="myth-text">"Carbs make you fat"</div>
+            </div>
+            <div class="truth-text">
+              Carbohydrates are your body's primary fuel source — especially during high-intensity training. Time them right and they work for you.
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 4 — FATS -->
+        <div class="slide slide-4">
+          <div class="bg-circle-1"></div>
+          <div class="bg-circle-2"></div>
+          <div class="slide-num">04 / 06</div>
+          <div class="header">
+            <div class="macro-pill">
+              <div class="dot-icon"></div>
+              <div class="pill-text">Macro 03 · Fats</div>
+            </div>
+          </div>
+          <div class="center-content">
+            <div class="percent">30<sub>%</sub></div>
+            <div class="percent-label">of total daily calories</div>
+            <div class="fat-headline">FATS FUEL<br>HORMONES</div>
+            <div class="fat-sub">
+              Healthy fats regulate testosterone, cortisol & estrogen. Never drop below 20% of total intake.
+            </div>
+          </div>
+          <div class="bottom-tags">
+            <div class="tag-pill">Avocado</div>
+            <div class="tag-pill">Olive Oil</div>
+            <div class="tag-pill">Salmon</div>
+            <div class="tag-pill">Nuts</div>
+          </div>
+        </div>
+
+        <!-- SLIDE 5 — MACRO SPLIT -->
+        <div class="slide slide-5">
+          <div class="top-stripe"></div>
+          <div class="slide-num">05 / 06</div>
+          <div class="content">
+            <div class="eyebrow">The Formula</div>
+            <div class="title">YOUR DAILY<br>MACRO SPLIT</div>
+            <div class="macro-rows">
+              <div>
+                <div class="macro-row">
+                  <div class="row-label">PROTEIN</div>
+                  <div class="bar-track"><div class="bar-fill protein"></div></div>
+                  <div class="row-pct">~35%</div>
+                </div>
+                <div class="row-desc">Build + Repair</div>
+              </div>
+              <div>
+                <div class="macro-row">
+                  <div class="row-label">CARBS</div>
+                  <div class="bar-track"><div class="bar-fill carbs"></div></div>
+                  <div class="row-pct">~40%</div>
+                </div>
+                <div class="row-desc">Fuel + Performance</div>
+              </div>
+              <div>
+                <div class="macro-row">
+                  <div class="row-label">FATS</div>
+                  <div class="bar-track"><div class="bar-fill fats"></div></div>
+                  <div class="row-pct">~25%</div>
+                </div>
+                <div class="row-desc">Hormones + Recovery</div>
+              </div>
+            </div>
+            <div class="footnote">
+              <span>NOTE —</span> These ratios shift with your goal. Fat loss phases shift protein higher. Building phases increase carbs.
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 6 — CTA -->
+        <div class="slide slide-6">
+          <div class="bg-geo"></div>
+          <div class="bg-circle"></div>
+          <div class="slide-num">06 / 06</div>
+          <div class="content">
+            <div class="coach-tag">@FitCoachKarl</div>
+            <div class="cta-big">GET YOUR<br>NUMBERS</div>
+            <div class="cta-sub">
+              Stop guessing. Use the free macro calculator in the link below to get your personalized daily targets.
+            </div>
+            <div class="cta-btn">
+              Link in bio
+              <div class="arrow"></div>
+            </div>
+          </div>
+          <div class="handle">@FitCoachKarl</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn" id="prev" onclick="navigate(-1)" disabled>&#8592;</button>
+      <div class="dots" id="dots"></div>
+      <button class="btn" id="next" onclick="navigate(1)">&#8594;</button>
+    </div>
+
+    <div class="slide-counter" id="counter">Slide 1 of 6</div>
+  </div>
+
+  <div class="export-hint">
+    1080 × 1080 &nbsp;·&nbsp; 6 slides &nbsp;·&nbsp; Screenshot each at full zoom to export
+  </div>
+
+  <script>
+    const slides = document.getElementById('slides');
+    const dotsContainer = document.getElementById('dots');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const counter = document.getElementById('counter');
+    const total = 6;
+    let current = 0;
+
+    // Build dots
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.onclick = () => goTo(i);
+      dotsContainer.appendChild(d);
+    }
+
+    function goTo(index) {
+      current = index;
+      const slideWidth = slides.parentElement.offsetWidth;
+      slides.style.transform = `translateX(-${current * slideWidth}px)`;
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+      counter.textContent = `Slide ${current + 1} of ${total}`;
+    }
+
+    function navigate(dir) { goTo(Math.max(0, Math.min(total - 1, current + dir))); }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'ArrowLeft')  navigate(-1);
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    slides.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    slides.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) navigate(dx < 0 ? 1 : -1);
+    });
+
+    // Reflow on resize
+    window.addEventListener('resize', () => goTo(current));
+  </script>
+</body>
+</html>
