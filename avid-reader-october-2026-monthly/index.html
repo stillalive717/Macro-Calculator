@@ -59,7 +59,25 @@ body{background:#f4f0e7}.mast{background:#101f26;color:#f8f1e2;border-bottom:1px
   @keyframes date-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}@keyframes date-dot{from{transform:scale(.45)}to{transform:scale(1)}}
 }
 @media print{.campaigns article::before,.campaigns article::after{display:none}}
-</style></head>
+</style><style>
+.oct-recap{margin:1.5rem 0 0;padding:clamp(1.2rem,3.2vw,2.8rem);color:#fff6e6;background:linear-gradient(118deg,#142e39 0%,#203d43 63%,#294749 100%);border-top:4px solid #dba467;isolation:isolate}
+.oct-recap header{display:flex;justify-content:space-between;align-items:center;gap:.8rem;border-bottom:1px solid #839495;padding-bottom:.85rem}
+.oct-recap h2{font:500 clamp(1.45rem,3vw,2.15rem)/1.1 Georgia,serif;letter-spacing:-.025em;color:inherit;margin:0}
+.oct-recap button{border:1px solid #b6c5bc;background:transparent;color:inherit;border-radius:100px;padding:.55rem .95rem;cursor:pointer;font:600 .8rem system-ui}
+.oct-recap button:focus-visible{outline:3px solid #ffd89c;outline-offset:3px}
+.oct-recap .recap-layout{display:grid;grid-template-columns:.9fr 1.12fr;gap:clamp(1.6rem,5vw,4rem);align-items:center;padding-top:1.35rem}
+.recap-metric{border-left:2px solid #e4b274;padding-left:1rem;margin-bottom:1.65rem}.recap-metric:last-child{margin:0}
+.recap-count{font:500 clamp(2.5rem,5vw,4.4rem)/1 Georgia,serif;color:#ffdb9b;font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.045em}
+.recap-metric strong,.recap-metric small{display:block}.recap-metric strong{font-size:1rem}.recap-metric small,.recap-date{font-size:.76rem;color:#d4e1db}
+.recap-triptych{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.5rem,1.25vw,1rem)}
+.recap-triptych img{width:100%;height:auto;display:block;border:1px solid #788e8c}.recap-triptych figcaption{padding:.55rem 0 0;font:600 clamp(.85rem,1.3vw,1.05rem)/1.25 system-ui}.recap-date{display:block;margin-top:.24rem;font-weight:450}
+@keyframes coverSettle{from{transform:translateY(12px);opacity:.35}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:no-preference){.recap-playing .recap-triptych figure{animation:coverSettle .68s both;animation-delay:var(--cue)}}
+@media(max-width:650px){.oct-recap .recap-layout{grid-template-columns:1fr;gap:1.2rem}.recap-totals{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}.recap-metric{padding-left:.58rem;margin:0}.recap-metric strong{font-size:.84rem}.recap-metric small{font-size:.71rem}}
+@media(prefers-reduced-motion:reduce){.oct-recap button{display:none}}
+@media print{.oct-recap{display:none!important}}
+</style>
+</head>
 <body id="top"><a class="skip" href="#report">Skip to report</a>
 <header class="mast"><div class="wrap"><div class="brand"><b aria-hidden="true">¶</b> The Avid Reader Show</div><nav aria-label="Report sections"><a href="#youtube">YouTube</a><a href="#instagram">Instagram</a><a href="#production">Production</a></nav></div></header>
 <main class="wrap" id="report"><section class="edition" aria-label="October results and selected campaign artwork">
@@ -69,6 +87,9 @@ body{background:#f4f0e7}.mast{background:#101f26;color:#f8f1e2;border-bottom:1px
 <p class="letter">Sam, one Roadster clip brought in more than half our views. What caught my eye was the rest: even without it, we beat September’s entire channel for views and watch time.</p><p class="signoff">Karl <span> / &nbsp;The Avid Reader Show</span></p></div>
 <div class="artstage"><div class="stagehead"><span>FROM THE EDIT DESK</span><span>CONTACT SHEET &nbsp; 01—04</span></div><div class="gallery"><button type="button" data-art="0" aria-label="Show Antonio Damasio, The Vagus Nerve" aria-pressed="true" class="covercard pos0"><img width="478" height="850" src="assets/damasio.webp" alt="Antonio Damasio campaign artwork for The Vagus Nerve"><span>01</span></button><button type="button" data-art="1" aria-label="Show Sam Kean, The Greeks Built a Computer" aria-pressed="false" class="covercard pos1"><img width="478" height="850" src="assets/kean.webp" alt="Sam Kean campaign artwork for The Greeks Built a Computer"><span>02</span></button><button type="button" data-art="2" aria-label="Show Eli Burnstein, Pluck the Day" aria-pressed="false" class="covercard pos2"><img width="478" height="850" src="assets/burnstein.webp" alt="Eli Burnstein campaign artwork for Pluck the Day"><span>03</span></button><button type="button" data-art="3" aria-label="Show Lisa Crites, Beautifully Unbroken" aria-pressed="false" class="covercard pos3"><img width="478" height="850" src="assets/lisa-crites.webp" alt="Lisa Crites campaign artwork for Beautifully Unbroken"><span>04</span></button></div><div class="artcaption"><div aria-live="polite"><small id="artist">01 &nbsp;/&nbsp; Antonio Damasio</small><b id="piece">The Vagus Nerve</b><span id="evidence">155 Instagram interactions · 20 shares</span></div><div class="artcontrols"><button type="button" class="replay-covers" aria-label="Replay the cover animation" title="Replay the cover animation"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10a8 8 0 1 1 .9 6M4 4v6h6"/></svg></button><button type="button" data-step="-1" aria-label="Previous campaign cover">←</button><button type="button" data-step="1" aria-label="Next campaign cover">→</button></div></div></div>
 </div><div class="editionfoot"><span>YouTube · Oct 1–31 &nbsp; / &nbsp; *Instagram · rolling 30 days</span><div><a href="#screening-room">View featured work ↓</a><button type="button" class="brief-button">Print brief ↗</button></div></div></section>
+<section class="oct-recap" id="october-recap" aria-labelledby="recap-title"><header><h2 id="recap-title">October in motion</h2><button type="button" hidden aria-label="Replay October in motion">↻ Replay</button></header>
+<div class="recap-layout"><div class="recap-totals"><div class="recap-metric"><div class="recap-count" aria-hidden="true" data-from="976" data-to="1008">1,008</div><strong><span class="numeric-reader">1,008 </span>Instagram followers</strong><small>Up from 976 in the September snapshot</small></div><div class="recap-metric"><div class="recap-count" aria-hidden="true" data-from="0" data-to="44502">44,502</div><strong><span class="numeric-reader">44,502 </span>YouTube views</strong><small>October 1–31</small></div></div>
+<div class="recap-triptych" role="group" aria-label="Three October interview premieres"><figure style="--cue:0s"><img src="assets/lisa-crites.webp" width="478" height="850" alt="Lisa Crites campaign cover"><figcaption>Lisa Crites<span class="recap-date">October 1</span></figcaption></figure><figure style="--cue:0.18s"><img src="assets/kean.webp" width="478" height="850" alt="Sam Kean campaign cover"><figcaption>Sam Kean<span class="recap-date">October 5</span></figcaption></figure><figure style="--cue:0.36s"><img src="assets/burnstein.webp" width="478" height="850" alt="Eli Burnstein campaign cover"><figcaption>Eli Burnstein<span class="recap-date">October 26</span></figcaption></figure></div></div></section>
 <section class="chapter reveal" id="youtube"><div class="section-id">01 &nbsp; / &nbsp; YouTube</div><h2>Where the growth came from</h2><div class="split"><div><p>Views rose <strong>160.6%</strong> from September and watch time rose <strong>45.0%</strong>. I came across that 52-second Tesla Roadster clip one evening. I thought you’d get a kick out of it, and I had a feeling people would share it. I posted it on October 15 as a one-off. It earned <strong>280 shares</strong>.</p><p>The remaining uploads drew <strong>21,127 views and 366.2 watch hours</strong>. The entire channel recorded 17,079 views and 312.5 hours in September. October finished with 57 subscribers gained and a net change of zero.</p></div><aside class="inset"><h3>One clip’s share of October</h3><div class="strip" aria-hidden="true"><span></span><span></span></div><div class="legend"><div><b>23,375</b><span>Roadster · 52.5%</span></div><div><b>21,127</b><span>All other views · 47.5%</span></div></div></aside></div>
 <div class="tiles"><article><span class="tag">Discovery</span><h3>Barrat led the Shorts</h3><p>“Is AI Doom a Marketing Strategy?” drew 1,169 views. Across our Shorts, 50% stayed to watch, up from 45.91% in September. The Shorts feed supplied 84.5% of Shorts views.</p></article><article><span class="tag">Interview viewing</span><h3>Damasio held attention</h3><p>People spent 42.3 hours watching your full conversation with Antonio Damasio across 487 views. The episode averaged 7:08 per view, compared with 1:55 for the channel’s Videos category.</p></article><article><span class="tag">Format mix</span><h3>51 Shorts and 5 Videos</h3><p>Shorts supplied 36.2% of views and Videos supplied 63.8%. YouTube classified the Roadster upload as a Video. Browse features supplied 36.0% of channel views, ahead of the Shorts feed at 30.5% and search at 23.7%.</p></article></div>
 <figure class="chart"><div class="tag">Field notes &nbsp; / &nbsp; YouTube</div><h2>The mid-month spike</h2><svg viewBox="0 0 330 208" role="img" aria-labelledby="ct cd"><title id="ct">Daily engaged views in October</title><desc id="cd">Daily engaged views peaked on October 16 at 5,184, following 3,216 on October 15.</desc><g stroke="#50626a" stroke-width=".7"><path d="M10 179H322 M10 121H322 M10 63H322"/></g><rect class="spine" x="12" y="165.66" width="7" height="13.34" rx="1" fill="#abd0be" style="--i:0"><title>October 1 · 461 engaged views</title></rect>
@@ -183,4 +204,43 @@ if(window.IntersectionObserver&&!motionPreference.matches){
   motionPreference.addEventListener('change',event=>{if(event.matches){numberObserver.disconnect();finishAnimations.forEach(finish=>finish());}});
 }
 window.addEventListener('beforeprint',()=>finishAnimations.forEach(finish=>finish()));
-</script></body></html>
+</script><script>
+(()=>{
+  const panel=document.getElementById("october-recap");
+  const button=panel.querySelector("button");
+  const numbers=Array.from(panel.querySelectorAll(".recap-count"));
+  const preference=matchMedia("(prefers-reduced-motion: reduce)");
+  const format=new Intl.NumberFormat("en-US");
+  let observer, frame;
+  function settle(){
+    cancelAnimationFrame(frame);
+    panel.classList.remove("recap-playing");
+    numbers.forEach(node=>node.textContent=format.format(Number(node.dataset.to)));
+  }
+  function play(){
+    observer?.disconnect();
+    settle();
+    if(preference.matches)return;
+    void panel.offsetWidth;
+    panel.classList.add("recap-playing");
+    const start=performance.now();
+    function draw(now){
+      const t=Math.min(1,(now-start)/1250);
+      numbers.forEach(node=>{
+        const from=Number(node.dataset.from),to=Number(node.dataset.to);
+        node.textContent=format.format(Math.round(from+(to-from)*(1-(1-t)**3)));
+      });
+      if(t<1)frame=requestAnimationFrame(draw);
+    }
+    draw(start);
+  }
+  button.hidden=preference.matches;
+  button.addEventListener("click",play);
+  if(!preference.matches && window.IntersectionObserver){
+    observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))play()},{threshold:.25});
+    observer.observe(panel);
+  }
+  preference.addEventListener("change",()=>{button.hidden=preference.matches;settle()});
+})();
+</script>
+</body></html>
